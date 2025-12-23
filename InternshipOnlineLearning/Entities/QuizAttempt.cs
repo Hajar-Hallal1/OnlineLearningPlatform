@@ -11,9 +11,9 @@ namespace InternshipOnlineLearning.Entities
         public int QuizId { get; set; }
         public virtual Quiz Quiz { get; set; }
 
-        [ForeignKey("USer")]
-        public int UserId { get; set; }
-        public virtual User User { get; set; }
+        //[ForeignKey("USer")]
+        //public int UserId { get; set; }
+        //public virtual User User { get; set; }
 
         public int Score { get; set; }
         public bool IsPassed { get; set; }

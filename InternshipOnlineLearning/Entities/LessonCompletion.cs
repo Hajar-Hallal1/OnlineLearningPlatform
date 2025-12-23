@@ -13,9 +13,9 @@ namespace InternshipOnlineLearning.Entities
         public int LessonId { get; set; }
         public virtual Lesson Lesson { get; set; }
 
-        [ForeignKey("User")]
-        public int UserId { get; set; }
-        public virtual User User { get; set; }
+        //[ForeignKey("User")]
+        //public int UserId { get; set; }
+        //public virtual User User { get; set; }
 
         public bool IsCompleted { get; set; }
         public DateTime? CompletedDate { get; set; }

@@ -18,9 +18,9 @@ namespace InternshipOnlineLearning.Entities
         public int EnrollmentCount { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        [ForeignKey("User")]
-        public int CreatedBy { get; set; }
+        //[ForeignKey("User")]
+        //public int CreatedBy { get; set; }
 
-        public virtual User User { get; set; }
+        //public virtual User User { get; set; }
     }
 }

@@ -1,11 +1,17 @@
 ﻿using InternshipOnlineLearning.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace InternshipOnlineLearning.DatabaseContext
 {
-    public class LearnOnlineDBContext : DbContext
+    public class LearnOnlineDBContext : IdentityDbContext<IdentityUser>
     {
-        public DbSet<User> Users { get; set; }
+        public LearnOnlineDBContext(DbContextOptions options)
+            : base(options)
+        {
+        }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Quiz> Quizzes { get; set; }
@@ -17,11 +23,6 @@ namespace InternshipOnlineLearning.DatabaseContext
         public DbSet<LessonCompletion> LessonCompletions { get; set; }
         public DbSet<Certificate> Certificates { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Data Source=DESKTOP-RMLB1D6\\SQLEXPRESS;Initial Catalog=LearnOnlineDatabase;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes()
@@ -29,10 +30,10 @@ namespace InternshipOnlineLearning.DatabaseContext
             {
                 foreignKey.DeleteBehavior = DeleteBehavior.NoAction;
             }
-
             base.OnModelCreating(modelBuilder);
         }
-
-
     }
 }
+        
+     
+        
