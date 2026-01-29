@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.CodeAnalysis.Options;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InternshipOnlineLearning.Entities
@@ -11,8 +12,9 @@ namespace InternshipOnlineLearning.Entities
 
         [ForeignKey("Quiz")]
         public int QuizId { get; set; }
-        public virtual Quiz Quiz { get; set; }
+        public virtual Quiz? Quiz { get; set; }
         public string QuestionText { get; set; }
-        public string QuestionType { get; set; }
+
+        public List<Answer> Answers { get; set; } = new();
     }
 }

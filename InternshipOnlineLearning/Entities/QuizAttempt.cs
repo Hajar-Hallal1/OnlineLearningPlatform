@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InternshipOnlineLearning.Entities
 {
@@ -11,9 +12,8 @@ namespace InternshipOnlineLearning.Entities
         public int QuizId { get; set; }
         public virtual Quiz Quiz { get; set; }
 
-        //[ForeignKey("USer")]
-        //public int UserId { get; set; }
-        //public virtual User User { get; set; }
+        public string StudentId { get; set; }
+        public IdentityUser Student { get; set; }
 
         public int Score { get; set; }
         public bool IsPassed { get; set; }

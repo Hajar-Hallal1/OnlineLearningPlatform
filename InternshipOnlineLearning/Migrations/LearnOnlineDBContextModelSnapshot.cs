@@ -129,9 +129,14 @@ namespace InternshipOnlineLearning.Migrations
                     b.Property<double>("ProgressPercent")
                         .HasColumnType("float");
 
+                    b.Property<string>("StudentId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
+
+                    b.HasIndex("StudentId");
 
                     b.ToTable("Enrollments");
                 });
@@ -195,9 +200,14 @@ namespace InternshipOnlineLearning.Migrations
                     b.Property<int>("LessonId")
                         .HasColumnType("int");
 
+                    b.Property<string>("StudentId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("LessonId");
+
+                    b.HasIndex("StudentId");
 
                     b.ToTable("LessonCompletions");
                 });
@@ -211,9 +221,6 @@ namespace InternshipOnlineLearning.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("QuestionText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("QuestionType")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("QuizId")
@@ -278,9 +285,14 @@ namespace InternshipOnlineLearning.Migrations
                     b.Property<int>("Score")
                         .HasColumnType("int");
 
+                    b.Property<string>("StudentId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("QuizId");
+
+                    b.HasIndex("StudentId");
 
                     b.ToTable("QuizAttempts");
                 });
@@ -517,7 +529,7 @@ namespace InternshipOnlineLearning.Migrations
             modelBuilder.Entity("InternshipOnlineLearning.Entities.Answer", b =>
                 {
                     b.HasOne("InternshipOnlineLearning.Entities.Question", "Question")
-                        .WithMany()
+                        .WithMany("Answers")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -549,12 +561,19 @@ namespace InternshipOnlineLearning.Migrations
             modelBuilder.Entity("InternshipOnlineLearning.Entities.Enrollment", b =>
                 {
                     b.HasOne("InternshipOnlineLearning.Entities.Course", "Course")
-                        .WithMany()
+                        .WithMany("Enrollments")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.Navigation("Course");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("InternshipOnlineLearning.Entities.Lesson", b =>
@@ -576,13 +595,20 @@ namespace InternshipOnlineLearning.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.Navigation("Lesson");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("InternshipOnlineLearning.Entities.Question", b =>
                 {
                     b.HasOne("InternshipOnlineLearning.Entities.Quiz", "Quiz")
-                        .WithMany()
+                        .WithMany("Questions")
                         .HasForeignKey("QuizId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -593,7 +619,7 @@ namespace InternshipOnlineLearning.Migrations
             modelBuilder.Entity("InternshipOnlineLearning.Entities.Quiz", b =>
                 {
                     b.HasOne("InternshipOnlineLearning.Entities.Course", "Course")
-                        .WithMany()
+                        .WithMany("Quizzes")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -616,7 +642,14 @@ namespace InternshipOnlineLearning.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.Navigation("Quiz");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("InternshipOnlineLearning.Entities.QuizAttemptAnswer", b =>
@@ -696,8 +729,22 @@ namespace InternshipOnlineLearning.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("InternshipOnlineLearning.Entities.Course", b =>
+                {
+                    b.Navigation("Enrollments");
+
+                    b.Navigation("Quizzes");
+                });
+
+            modelBuilder.Entity("InternshipOnlineLearning.Entities.Question", b =>
+                {
+                    b.Navigation("Answers");
+                });
+
             modelBuilder.Entity("InternshipOnlineLearning.Entities.Quiz", b =>
                 {
+                    b.Navigation("Questions");
+
                     b.Navigation("QuizAttempts");
                 });
 #pragma warning restore 612, 618

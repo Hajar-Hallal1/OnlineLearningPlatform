@@ -3,12 +3,14 @@ import { Search, Filter } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { CourseCard } from '../components/CourseCard';
 import { Input } from '../components/ui/input';
+import { useNavigate } from 'react-router-dom';
 
 export function Home() {
   const { courses } = useApp();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedLevel, setSelectedLevel] = useState<string>('All');
+  const navigate = useNavigate();
 
   const categories = useMemo(() => {
     const cats = Array.from(new Set(courses.map(c => c.category)));
@@ -52,7 +54,7 @@ export function Home() {
                   placeholder="Search for courses by name, instructor, or keyword..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-12 pr-4 py-6 text-lg rounded-xl border-0 shadow-lg"
+                  className="w-full pl-12 pr-4 py-6 text-lg rounded-xl border-0 shadow-lg text-black"
                 />
               </div>
             </div>
@@ -127,7 +129,7 @@ export function Home() {
         {filteredCourses.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredCourses.map((course) => (
-              <CourseCard key={course.id} course={course} />
+              <CourseCard key={course.id} course={course}/>
             ))}
           </div>
         ) : (

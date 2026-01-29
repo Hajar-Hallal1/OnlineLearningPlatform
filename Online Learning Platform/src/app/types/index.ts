@@ -2,7 +2,7 @@ export interface Course {
   id: number;
   title: string;
   description: string;
-  shortdescription: string;
+  shortDescription: string;
   instructor: string;
   duration: string;
   level: string;
@@ -13,7 +13,8 @@ export interface Course {
 }
 
 export interface Student {
-  id: string;
+  // id: string;
+  id: number;
   name: string;
   email: string;
   enrolledCourses: number[];

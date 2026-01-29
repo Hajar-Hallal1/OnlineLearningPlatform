@@ -2,16 +2,13 @@
 {
     public class AddCourseDto
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string ShortDescription { get; set; }
-        public string Duration { get; set; }
-        public string Level { get; set; }
+        public string Title { get; set; } = null!;
+        public string Description { get; set; } = null!;
+        public string ShortDescription { get; set; } = null!;
+        public string Duration { get; set; } = null!;
+        public string Level { get; set; } = null!;
         public decimal Price { get; set; }
-        public string Category { get; set; }
-        public string ImageUrl { get; set; }
-
-        // 👇 what you need now
-        public string Instructor { get; set; }
+        public string Category { get; set; } = null!;
+        public string ImageUrl { get; set; } = null!;
     }
 }

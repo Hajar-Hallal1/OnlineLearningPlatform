@@ -11,7 +11,7 @@ export function CourseCard({ course }: CourseCardProps) {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/course/${course.id}`);
+    navigate(`/Courses/${course.id}`);
   };
 
   return (

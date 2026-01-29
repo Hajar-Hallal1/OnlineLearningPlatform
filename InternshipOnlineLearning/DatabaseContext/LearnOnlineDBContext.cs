@@ -22,6 +22,7 @@ namespace InternshipOnlineLearning.DatabaseContext
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<LessonCompletion> LessonCompletions { get; set; }
         public DbSet<Certificate> Certificates { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,6 +32,7 @@ namespace InternshipOnlineLearning.DatabaseContext
                 foreignKey.DeleteBehavior = DeleteBehavior.NoAction;
             }
             base.OnModelCreating(modelBuilder);
+
         }
     }
 }

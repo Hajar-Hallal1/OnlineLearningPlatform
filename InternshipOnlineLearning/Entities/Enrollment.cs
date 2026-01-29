@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InternshipOnlineLearning.Entities
@@ -9,9 +10,8 @@ namespace InternshipOnlineLearning.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        //[ForeignKey("User")]
-        //public int UserId { get; set; }
-        //public virtual User User { get; set; }
+        public string StudentId { get; set; } = null!;
+        public IdentityUser Student { get; set; } = null!;
 
         [ForeignKey("Course")]
         public int CourseId { get; set; }

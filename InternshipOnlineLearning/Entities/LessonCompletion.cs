@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InternshipOnlineLearning.Entities
@@ -13,9 +14,8 @@ namespace InternshipOnlineLearning.Entities
         public int LessonId { get; set; }
         public virtual Lesson Lesson { get; set; }
 
-        //[ForeignKey("User")]
-        //public int UserId { get; set; }
-        //public virtual User User { get; set; }
+        public string StudentId { get; set; }
+        public IdentityUser Student { get; set; }
 
         public bool IsCompleted { get; set; }
         public DateTime? CompletedDate { get; set; }

@@ -1,3 +1,4 @@
+using InternshipOnlineLearning.Data;
 using InternshipOnlineLearning.DatabaseContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -29,6 +30,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     options.Password.RequireDigit = false;
     options.Password.RequireUppercase = false;
     options.Password.RequireLowercase = false;
+    options.User.RequireUniqueEmail = true;
 
 })
     .AddEntityFrameworkStores<LearnOnlineDBContext>()
@@ -92,6 +94,10 @@ app.UseCors("AllowReact");
 
 app.MapControllers();
 
-//Test.TestDB();
+using (var scope = app.Services.CreateScope())
+{
+    await IdentitySeeder.SeedAsync(scope.ServiceProvider);
+}
+
 
 app.Run();

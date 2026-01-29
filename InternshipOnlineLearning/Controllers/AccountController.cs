@@ -28,27 +28,40 @@ namespace InternshipOnlineLearning.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] Register model)
         {
+
+            if (await _userManager.FindByEmailAsync(model.Email) != null)
+                return BadRequest("Email already exists");
+
+            if (await _userManager.FindByNameAsync(model.Username) != null)
+                return BadRequest("Username already exists");
+
             var user = new IdentityUser { UserName = model.Username, Email = model.Email };
+
             var result = await _userManager.CreateAsync(user, model.Password);
 
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                return Ok(new { message = "User registered Successfully" });
+               return BadRequest(result.Errors); 
             }
-            return BadRequest(result.Errors);
+            
+            await _userManager.AddToRoleAsync(user, "Student");
+            return Ok(new { message = "User registered Successfully" });
         }
 
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] Login model)
         {
-            var user = await _userManager.FindByNameAsync(model.Username);
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
                 var userRoles = await _userManager.GetRolesAsync(user);
                 var authClaims = new List<Claim>
                 {
-                    new Claim(JwtRegisteredClaimNames.Sub,user.UserName!),
+                    new Claim(JwtRegisteredClaimNames.Sub,user.Email!),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id),
+                    new Claim("username", user.UserName!)
                 };
                 authClaims.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
 

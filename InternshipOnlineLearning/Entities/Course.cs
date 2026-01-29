@@ -21,19 +21,9 @@ namespace InternshipOnlineLearning.Entities
         // Identity relation
         public string InstructorId { get; set; } = null!;
         public IdentityUser Instructor { get; set; } = null!;
-        
-       
-        
-        
-        //public bool IsPublished { get; set; }
-        //public int EnrollmentCount { get; set; }
-        //public DateTime CreatedAt { get; set; }
-        
+        public ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
+        public ICollection<Quiz> Quizzes { get; set; } = new List<Quiz>();
 
 
-        //[ForeignKey("User")]
-        //public int CreatedBy { get; set; }
-
-        //public virtual User User { get; set; }
     }
 }
